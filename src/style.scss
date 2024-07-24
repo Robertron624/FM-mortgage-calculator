@@ -1,0 +1,469 @@
+// Variables
+
+// # Colors
+
+// ## Primary
+
+$lime: hsl(61, 70%, 52%);
+$red: hsl(4, 69%, 50%);
+
+// ## Neutral
+
+$white: hsl(0, 0%, 100%);
+$slate-100: hsl(202, 86%, 94%);
+$slate-300: hsl(203, 41%, 72%);
+$slate-500: hsl(200, 26%, 54%);
+$slate-700: hsl(200, 24%, 40%);
+$slate-800: hsl(201, 54%, 16%);
+$slate-900: hsl(202, 56%, 12%);
+
+// ## Modifier
+
+$lime-light: rgba(215, 218, 47, 0.3);
+$lime-dark: rgba(215, 218, 47, 0.7);
+
+// # Mixins
+
+// ## media queries
+
+@mixin tablet {
+  @media (min-width: 640px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin large-desktop {
+  @media (min-width: 1440px) {
+    @content;
+  }
+}
+
+// ## borders
+
+$container-border-radius-xs: 0.25rem;
+$container-border-radius-sm: 0.5rem;
+$container-border-radius: 1rem;
+$container-border-radius-xl: 2rem;
+$container-border-radius-xxl: 3rem;
+
+// ## Other
+
+$main-transition: all 0.3s ease-in-out;
+
+// Fonts
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("./assets/fonts/static/PlusJakartaSans-Medium.ttf")
+    format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("./assets/fonts/static/PlusJakartaSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+// Start of the main styles
+
+button {
+  transition: $main-transition;
+}
+
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: $slate-900;
+  background-color: $slate-100;
+
+  justify-content: center;
+}
+
+main {
+  @include tablet {
+    padding-block: 1.5rem;
+  }
+
+  .calculator {
+    padding-block-start: 2rem;
+    background-color: $white;
+    border-radius: $container-border-radius;
+
+    @include tablet {
+      max-width: 90%;
+      margin-inline: auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    @include desktop {
+      flex-direction: row;
+      display: flex;
+      gap: 0.8rem;
+      padding-block: 0;
+      max-width: 46rem;
+    }
+
+    .desktop-left {
+      @include desktop() {
+        padding-block-start: 2rem;
+      }
+
+      .calculator-header {
+        padding-inline: 1rem;
+        gap: 0.3rem;
+
+        @include tablet {
+          padding-inline: 1.5rem;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        button {
+          font-size: 0.75rem;
+          text-decoration: underline;
+          color: $slate-500;
+
+          &:hover {
+            color: $slate-900;
+          }
+        }
+
+        h1 {
+          font-size: 1.2rem;
+        }
+      }
+
+      form {
+        padding-inline: 1rem;
+        padding-block: 1.5rem;
+
+        @include tablet {
+          padding-inline: 1.5rem;
+          padding-block: 2rem;
+        }
+
+        input {
+          color: $slate-900;
+          font-weight: 700;
+        }
+
+        .form-groups {
+          gap: 1rem;
+
+          .tablet-wrapper {
+            gap: 1rem;
+
+            @include tablet {
+              flex-direction: row;
+            }
+          }
+
+          .form-group {
+            gap: 0.5rem;
+
+            &.error {
+              .wrapper {
+                outline-color: $red;
+
+                span {
+                  background-color: $red;
+                  color: $white;
+                }
+              }
+
+              .error-message {
+                display: block;
+              }
+            }
+
+            .error-message {
+              color: $red;
+              font-size: 0.5rem;
+              font-weight: 600;
+            }
+
+            p,
+            label {
+              font-size: 0.7rem;
+              color: $slate-500;
+            }
+
+            input {
+              padding: 0.5rem;
+              font-size: 1rem;
+              border: none;
+
+              // Delete spinners on Firefox
+              -moz-appearance: textfield;
+              appearance: textfield;
+
+              &:focus {
+                outline: none;
+              }
+
+              // Delete spinners on Chrome, Safari, Edge, y Opera
+              &::-webkit-outer-spin-button,
+              &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+            }
+
+            .wrapper {
+              outline: 1px solid $slate-500;
+              border-radius: $container-border-radius-xs;
+              transition: $main-transition;
+
+              &:hover {
+                outline-color: $slate-900;
+              }
+
+              &:focus-within {
+                outline-color: $lime;
+
+                span {
+                  background-color: $lime;
+                  color: $slate-900;
+                }
+
+                input {
+                  border-color: $lime-light;
+                }
+              }
+
+              span {
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 0.75rem;
+                color: $slate-500;
+                padding: 0.25rem 0.5rem;
+                background-color: $slate-100;
+                color: $slate-700;
+                font-weight: 900;
+                height: calc(100% - 0.001rem);
+              }
+            }
+
+            &.mortgage-amount {
+              .wrapper {
+                span {
+                  left: 0;
+                  border-top-left-radius: 0.25rem;
+                  border-bottom-left-radius: 0.25rem;
+                  padding-inline: 0.85rem;
+                }
+
+                input {
+                  padding-inline-start: 2.5rem;
+                }
+              }
+            }
+
+            &.mortgage-term,
+            &.interest-rate {
+              .wrapper span {
+                right: 0;
+                border-top-right-radius: 0.25rem;
+                border-bottom-right-radius: 0.25rem;
+              }
+            }
+
+            &.interest-rate {
+              .wrapper {
+                span {
+                  padding-inline: 0.65rem;
+                }
+              }
+            }
+
+            &.mortgage-type {
+              label {
+                font-size: 0.75rem;
+                color: $slate-900;
+                font-weight: 700;
+                padding-inline: 0.8rem;
+                padding-block: 0.7rem;
+                border: 1px solid $slate-700;
+                border-radius: 0.25rem;
+                gap: 0.7rem;
+                transition: $main-transition;
+
+                &:hover {
+                  border-color: $lime;
+                }
+
+                &.active {
+                  background-color: $lime-light;
+                  color: $slate-900;
+                  border: 1px solid $lime;
+                }
+
+                span {
+                  flex-grow: 1;
+                }
+
+                input[type="radio"] {
+                  appearance: none; // Hide the default radio button
+                  width: 0.65rem;
+                  height: 0.65rem;
+                  border: 2px solid $slate-700; // increase thickness
+                  border-radius: 50%; // make it a circle
+                  position: relative;
+                  cursor: pointer;
+
+                  &:checked {
+                    border-color: $lime;
+
+                    &::before {
+                      content: "";
+                      display: block;
+                      width: 0.6rem; // inner circle size
+                      height: 0.6rem; // inner circle size
+                      background-color: $lime-dark;
+                      border-radius: 50%;
+                      position: absolute;
+                      top: 50%;
+                      left: 50%;
+                      transform: translate(-50%, -50%);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        button[type="submit"] {
+          margin-top: 1.1rem;
+          padding: 0.7rem 1rem;
+          background-color: $lime;
+          color: $slate-900;
+          font-weight: 700;
+          border: none;
+          border-radius: 1.5rem;
+          font-size: 1rem;
+
+          gap: 0.65rem;
+
+          @include tablet {
+            max-width: 20rem;
+            margin-top: 1.8rem;
+          }
+
+          &:hover {
+            background-color: $lime-light;
+          }
+        }
+      }
+    }
+
+    .desktop-right {
+      background-color: $slate-800;
+      color: $white;
+      padding-inline: 1rem;
+
+      @include tablet {
+        border-bottom-left-radius: $container-border-radius;
+        border-bottom-right-radius: $container-border-radius;
+      }
+
+      @include desktop() {
+        display: flex;
+        flex-shrink: 2;
+        justify-content: center;
+        align-items: center;
+        padding-inline: 2rem;
+        border-bottom-left-radius: $container-border-radius-xxl;
+        border-top-right-radius: $container-border-radius;
+      }
+      .results {
+        padding-block: 2rem;
+        h4 {
+          font-size: 1.3rem;
+
+          @include desktop {
+            font-size: 1.5rem;
+          }
+        }
+
+        p {
+          margin-top: 1.2rem;
+          color: $slate-500;
+          font-size: 0.75rem;
+        }
+
+        &.empty-results {
+          text-align: center;
+
+          p {
+            width: 70%;
+            font-size: 0.8rem;
+          }
+        }
+
+        &.completed-results {
+          .results-digits {
+            margin-top: 1.5rem;
+            background-color: $slate-900;
+            border-radius: 0.4rem;
+            border-top: 6px solid $lime;
+            padding-block: 1.4rem;
+            padding-inline: 1rem;
+
+            .result {
+              p.digit-label {
+                font-size: 0.85rem;
+                color: $slate-300;
+                margin-top: 0;
+              }
+
+              p:not(.digit-label) {
+                margin-top: 0.25rem;
+              }
+
+              &.monthly-repayment {
+                padding-bottom: 1rem;
+                border-bottom: 1px solid $slate-700;
+                p:not(.digit-label) {
+                  font-size: 2rem;
+                  color: $lime;
+                  font-weight: 700;
+
+                  @include tablet {
+                    font-size: 2.5rem;
+                  }
+                }
+              }
+
+              &.total-repayment {
+                padding-top: 1rem;
+                p:not(.digit-label) {
+                  font-size: 1.5rem;
+                  color: $white;
+                  font-weight: 700;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+footer {
+  background-color: $slate-700;
+  color: $white;
+  padding-block: 1rem;
+}
