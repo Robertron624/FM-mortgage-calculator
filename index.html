@@ -1,132 +1,231 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/images/favicon-32x32.png" sizes="32x32" type="image/png" />
+    <link
+      rel="icon"
+      href="/images/favicon-32x32.png"
+      sizes="32x32"
+      type="image/png"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Frontend Mentor | Mortgage repayment calculator</title>
+
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: hsl(202, 56%, 12%);
+        background-color: hsl(202, 86%, 94%);
+        justify-content: center;
+      }
+      /* Inline styles for loading spinner */
+      #loading-spinner {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+      }
+
+      #loading-spinner svg {
+        width: 3.25em;
+        transform-origin: center;
+        animation: rotate4 2s linear infinite;
+      }
+
+      #loading-spinner circle {
+        fill: none;
+        stroke: hsl(214, 97%, 59%);
+        stroke-width: 2;
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+        stroke-linecap: round;
+        animation: dash4 1.5s ease-in-out infinite;
+      }
+
+      @keyframes rotate4 {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes dash4 {
+        0% {
+          stroke-dasharray: 1, 200;
+          stroke-dashoffset: 0;
+        }
+
+        50% {
+          stroke-dasharray: 90, 200;
+          stroke-dashoffset: -35px;
+        }
+
+        100% {
+          stroke-dashoffset: -125px;
+        }
+      }
+
+      #app {
+        display: none; /* Hide content initially */
+      }
+    </style>
   </head>
   <body class="flex flex-col">
-    <!-- <div id="app"></div> -->
-    <main >
-      <div class="calculator">
-  
-        <div class="desktop-left">
-          <section class="calculator-header flex flex-col align-start">
-            <h1>Mortgage Calculator</h1>
-            <button id="clear-all">Clear All</button>
-          </section>
-      
-          <form id="calculator-form" class="flex flex-col">
-      
-            <div class="form-groups flex flex-col">
-      
-              <div class="form-group flex flex-col mortgage-amount
-              ">
-                <label for="mortgage-amount">Mortgage Amount</label>
-                <div class="wrapper flex relative">
-                  <span class="absolute flex align-center">
-                    £
-                  </span>
-                  <input class="w-full" type="text" id="mortgage-amount" name="mortgage-amount">
-                </div>
-                <p class="error-message" hidden>
-                  This field is required
-                </p>
-              </div>
-    
-              <div class="tablet-wrapper flex flex-col">
-                <div class="form-group flex flex-1 flex-col mortgage-term">
-                  <label for="mortgage-term">Mortgage Term</label>
+    <div id="loading-spinner">
+      <svg viewBox="25 25 50 50">
+        <circle r="20" cy="50" cx="50"></circle>
+      </svg>
+    </div>
+    <div id="app">
+      <main>
+        <div class="calculator">
+          <div class="desktop-left">
+            <section class="calculator-header flex flex-col align-start">
+              <h1>Mortgage Calculator</h1>
+              <button id="clear-all">Clear All</button>
+            </section>
+
+            <form id="calculator-form" class="flex flex-col">
+              <div class="form-groups flex flex-col">
+                <div class="form-group flex flex-col mortgage-amount">
+                  <label for="mortgage-amount">Mortgage Amount</label>
                   <div class="wrapper flex relative">
-                    <input class="w-full" type="number" id="mortgage-term" name="mortgage-term" >
-                    <span class="absolute flex align-center">
-                      years
-                    </span>
+                    <span class="absolute flex align-center"> £ </span>
+                    <input
+                      class="w-full"
+                      type="text"
+                      id="mortgage-amount"
+                      name="mortgage-amount"
+                    />
                   </div>
-                  <p class="error-message" hidden>
-                    This field is required
-                  </p>
+                  <p class="error-message" hidden>This field is required</p>
                 </div>
-                <div class="form-group flex flex-1 flex-col interest-rate">
-                  <label for="interest-rate">Interest Rate</label>
-                  <div class="wrapper flex relative">
-                    <input class="w-full" type="number" id="interest-rate" name="interest-rate" step="any">
-                    <span class="absolute flex align-center">
-                      %
-                    </span>
+
+                <div class="tablet-wrapper flex flex-col">
+                  <div class="form-group flex flex-1 flex-col mortgage-term">
+                    <label for="mortgage-term">Mortgage Term</label>
+                    <div class="wrapper flex relative">
+                      <input
+                        class="w-full"
+                        type="number"
+                        id="mortgage-term"
+                        name="mortgage-term"
+                      />
+                      <span class="absolute flex align-center"> years </span>
+                    </div>
+                    <p class="error-message" hidden>This field is required</p>
                   </div>
-                  <p class="error-message" hidden>
-                    This field is required
-                  </p>
+                  <div class="form-group flex flex-1 flex-col interest-rate">
+                    <label for="interest-rate">Interest Rate</label>
+                    <div class="wrapper flex relative">
+                      <input
+                        class="w-full"
+                        type="number"
+                        id="interest-rate"
+                        name="interest-rate"
+                        step="any"
+                      />
+                      <span class="absolute flex align-center"> % </span>
+                    </div>
+                    <p class="error-message" hidden>This field is required</p>
+                  </div>
+                </div>
+                <div class="form-group flex flex-col mortgage-type">
+                  <p for="mortgage-type">Mortgage Type</p>
+
+                  <label
+                    for="repayment"
+                    class="flex align-center cursor-pointer"
+                  >
+                    <input
+                      type="radio"
+                      id="repayment"
+                      name="mortgage-type"
+                      value="repayment"
+                    />
+                    <span> Repayment </span>
+                  </label>
+
+                  <label
+                    for="interest-only"
+                    class="flex align-center cursor-pointer"
+                  >
+                    <input
+                      type="radio"
+                      id="interest-only"
+                      name="mortgage-type"
+                      value="interest-only"
+                    />
+                    <span> Interest Only </span>
+                  </label>
+                  <p class="error-message" hidden>This field is required</p>
                 </div>
               </div>
-              <div class="form-group flex flex-col mortgage-type">
-                <p for="mortgage-type">Mortgage Type</p>
-        
-                <label for="repayment" class="flex align-center cursor-pointer">
-                  <input type="radio" id="repayment" name="mortgage-type" value="repayment">
-                  <span>
-                    Repayment
-                  </span>
-                </label>
-        
-                <label for="interest-only" class="flex align-center cursor-pointer">
-                  <input type="radio" id="interest-only" name="mortgage-type" value="interest-only">
-                  <span>
-                    Interest Only
-                  </span>
-                </label>
-                <p class="error-message" hidden>
-                  This field is required
-                </p>
-              </div>
+              <button
+                type="submit"
+                id="calculate-repayments"
+                class="flex align-center justify-center"
+              >
+                <img
+                  width="24"
+                  height="24"
+                  src="./images/icon-calculator.svg"
+                  alt="calculator icon"
+                />
+                <span> Calculate Repayments </span>
+              </button>
+            </form>
+          </div>
+          <div class="desktop-right">
+            <div class="results empty-results">
+              <figure>
+                <img
+                  class="mx-auto"
+                  src="./images/illustration-empty.svg"
+                  alt="Empty results illustration"
+                />
+              </figure>
+              <h4>Results shown here</h4>
+              <p class="mx-auto">
+                Complete the form and click “calculate repayments” to see what
+                your monthly repayments would be.
+              </p>
             </div>
-            <button type="submit" id="calculate-repayments" class="flex align-center justify-center">
-                <img width="24" height="24" src="./images/icon-calculator.svg" alt="calculator icon">
-              <span>
-                Calculate Repayments
-              </span>
-            </button>
-          </form>
-        </div>
-        <div class="desktop-right">
-          <div class="results empty-results">
-            <figure>
-              <img class="mx-auto" src="./images/illustration-empty.svg" alt="Empty results illustration">
-            </figure>
-            <h4>
-              Results shown here
-            </h4>
-            <p class="mx-auto">
-              Complete the form and click “calculate repayments” to see what 
-              your monthly repayments would be.
-            </p>
-          </div>  
-          <div class="results completed-results" hidden>
-            <h4>Your results</h4>
-            <p>Your results are shown below based on the information you provided. To adjust the results, edit the form and click “calculate repayments” again.</p>
-            <div class="results-digits">
-              <div class="result monthly-repayment">
-                <p class="digit-label">Your monthly repayments</p>
-                <p><span id="monthly-repayment">£0</span></p>
-              </div>
-              <div class="result total-repayment">
-                <p class="digit-label">Total you'll repay over the term</p>
-                <p><span id="total-repayment">£0</span></p>
+            <div class="results completed-results" hidden>
+              <h4>Your results</h4>
+              <p>
+                Your results are shown below based on the information you
+                provided. To adjust the results, edit the form and click
+                “calculate repayments” again.
+              </p>
+              <div class="results-digits">
+                <div class="result monthly-repayment">
+                  <p class="digit-label">Your monthly repayments</p>
+                  <p><span id="monthly-repayment">£0</span></p>
+                </div>
+                <div class="result total-repayment">
+                  <p class="digit-label">Total you'll repay over the term</p>
+                  <p><span id="total-repayment">£0</span></p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
-    <footer class="text-center flex-1 flex flex-center" style="display: none;">
-      <p class="attribution">
-        Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-        Coded by <a href="https://github.com/Robertron624" target="_blank">Robertron624</a>.
-      </p>
-    </footer>
-  
+      </main>
+      <footer class="text-center flex-1 flex flex-center" style="display: none">
+        <p class="attribution">
+          Challenge by
+          <a href="https://www.frontendmentor.io?ref=challenge"
+            >Frontend Mentor</a
+          >. Coded by
+          <a href="https://github.com/Robertron624" target="_blank"
+            >Robertron624</a
+          >.
+        </p>
+      </footer>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

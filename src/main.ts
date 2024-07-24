@@ -215,4 +215,14 @@ function main() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', main);
+window.addEventListener('load', () => {
+  const loadingSpinner = document.getElementById('loading-spinner');
+  const app = document.getElementById('app');
+  if (loadingSpinner && app) {
+    loadingSpinner.style.display = 'none';
+    app.style.display = 'block';
+  }
+  
+  // Ejecuta la función main después de asegurar que los estilos se han aplicado
+  document.addEventListener('DOMContentLoaded', main);
+});
