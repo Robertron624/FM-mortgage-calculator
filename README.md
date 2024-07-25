@@ -33,8 +33,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Github repo](https://github.com/Robertron624/FM-mortgage-calculator)
+- Live Site URL: [roberts-mortgage](https://roberts-mortagage-calculator.netlify.app/)
 
 ## My process
 
