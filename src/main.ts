@@ -164,9 +164,11 @@ function main() {
   });
 
   //# Handle form submission
-  function handleFormSubmit(e: Event) {
+  function 
+  handleFormSubmit(e: Event) {
     e.preventDefault();
-    const emptyInputs = checkFormInputs();
+
+      const emptyInputs = checkFormInputs();
     if (emptyInputs.length > 0) {
       emptyInputs.forEach((input) => addErrorClass(input));
       return;
@@ -191,7 +193,7 @@ function main() {
       showCompleteResultsElements();
     }
 
-    clearAllInputs();
+    // clearAllInputs();
   }
 
   form?.addEventListener('submit', handleFormSubmit);
@@ -221,8 +223,9 @@ window.addEventListener('load', () => {
   if (loadingSpinner && app) {
     loadingSpinner.style.display = 'none';
     app.style.display = 'block';
+    main();
   }
   
   // Ejecuta la función main después de asegurar que los estilos se han aplicado
-  document.addEventListener('DOMContentLoaded', main);
+  // document.addEventListener('DOMContentLoaded', main); 
 });

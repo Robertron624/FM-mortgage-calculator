@@ -106,8 +106,8 @@ main {
     }
 
     @include desktop {
-      flex-direction: row;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 0.8rem;
       padding-block: 0;
       max-width: 46rem;
